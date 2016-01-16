@@ -10,7 +10,7 @@ using Leap;
 
 
 
-public class HandRecon : MonoBehaviour {
+public class HandRecog : MonoBehaviour {
 
 
 	//Detect if index finger, middle finger, ring finger and little finger are straight (not bent).
@@ -60,9 +60,64 @@ public class HandRecon : MonoBehaviour {
 
 	}
 
-	public static float AngleBetweenPalms(HandModel leftHand, HandModel rightHand, Vector3 projectPlane){
+	public static float AngleBetweenPalmsNormals(HandModel leftHand, HandModel rightHand, Vector3 projectPlane){
 
 		Vector3 leftPalmNorm = leftHand.GetPalmNormal ();
+		Vector3 rightPalmNorm = rightHand.GetPalmNormal ();
+
+		Vector3 leftPalmNormProj = Math3d.ProjectVectorOnPlane (projectPlane,leftPalmNorm).normalized;
+		Vector3 rightPalmNormProj = Math3d.ProjectVectorOnPlane (projectPlane,rightPalmNorm).normalized;
+
+		float angle = Math3dExt.SignedVectorAngle (leftPalmNorm, rightPalmNormProj,projectPlane);
+
+		return angle;
+
+	}
+
+	public static float AngleBetweenPalmsDirections(HandModel leftHand, HandModel rightHand, Vector3 projectPlane){
+
+		Vector3 leftPalmDir = leftHand.GetPalmDirection ();
+		Vector3 rightPalmDir = rightHand.GetPalmDirection ();
+
+		Vector3 leftPalmDirProj = Math3d.ProjectVectorOnPlane (projectPlane, leftPalmDir).normalized;
+		Vector3 rightPalmDirProj = Math3d.ProjectVectorOnPlane (projectPlane, rightPalmDir).normalized;
+
+		float angle = Math3dExt.SignedVectorAngle (leftPalmDirProj, rightPalmDirProj, projectPlane);
+
+		return angle;
+
+	}
+
+	public static HandModel FindFirstLeftHand(HandModel [] hands){
+
+		for (int i = 0; i <hands.Length; i++) {
+
+			HandModel hand = hands[i];
+			if (hand.GetLeapHand().IsLeft){
+
+				return hand;
+			}
+
+		}
+
+		return null;
+
+	}
+
+	public static HandModel FindFirstRightHand(HandModel [] hands){
+
+		for (int i = 0; i <hands.Length; i++) {
+			
+			HandModel hand = hands[i];
+			if (hand.GetLeapHand().IsRight){
+				
+				return hand;
+			}
+			
+		}
+		
+		return null;
+
 
 	}
 
