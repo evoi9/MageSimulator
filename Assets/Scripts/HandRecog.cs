@@ -10,7 +10,7 @@ using Leap;
 
 
 
-public class HandRecon : MonoBehaviour {
+public class HandRecog : MonoBehaviour {
 
 
 	//Detect if index finger, middle finger, ring finger and little finger are straight (not bent).
