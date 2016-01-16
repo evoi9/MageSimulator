@@ -60,6 +60,12 @@ public class HandRecon : MonoBehaviour {
 
 	}
 
+	public static float AngleBetweenPalms(HandModel leftHand, HandModel rightHand, Vector3 projectPlane){
+
+		Vector3 leftPalmNorm = leftHand.GetPalmNormal ();
+
+	}
+
 
 	public static bool IsFingerBent(HandModel hand, int fingerIndex, int boneIndex){
 
