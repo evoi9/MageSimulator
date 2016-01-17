@@ -27,7 +27,10 @@ public class DebugHandController : MonoBehaviour {
 		if (leftHand && rightHand ) {
 
 			if (leftHand.GetLeapHand().Confidence > 0.5f && rightHand.GetLeapHand().Confidence > 0.5f){
+
 				Debug.Log (transform.up.y);
+			
+
 				Debug.Log(HandRecog.AngleBetweenPalmsDirections(leftHand,rightHand,transform.up));
 			}
 

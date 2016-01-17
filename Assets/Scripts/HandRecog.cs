@@ -21,6 +21,16 @@ public class HandRecog : MonoBehaviour {
 
 	}
 
+	public static float DistanceBetweenPalms(HandModel leftHand, HandModel rightHand){
+
+		Vector3 leftHandPalmPos = leftHand.GetPalmPosition();
+		Vector3 rightHandPalmPos = rightHand.GetPalmPosition ();
+
+		Vector3 diff = leftHandPalmPos - rightHandPalmPos;
+
+		return diff.magnitude;
+	}
+
 	public static bool IsFingerBentWithinAngle(HandModel hand, int fingerIndex, int boneIndex, float minAngle, float maxAngle){
 
 		FingerModel finger = hand.fingers [fingerIndex];
@@ -60,6 +70,8 @@ public class HandRecog : MonoBehaviour {
 
 	}
 
+
+	
 	public static float AngleBetweenPalmsNormals(HandModel leftHand, HandModel rightHand, Vector3 projectPlane){
 
 		Vector3 leftPalmNorm = leftHand.GetPalmNormal ();
@@ -68,7 +80,7 @@ public class HandRecog : MonoBehaviour {
 		Vector3 leftPalmNormProj = Math3d.ProjectVectorOnPlane (projectPlane,leftPalmNorm).normalized;
 		Vector3 rightPalmNormProj = Math3d.ProjectVectorOnPlane (projectPlane,rightPalmNorm).normalized;
 
-		float angle = Math3dExt.SignedVectorAngle (leftPalmNorm, rightPalmNormProj,projectPlane);
+		float angle = Math3dExt.SignedVectorAngle (leftPalmNorm, rightPalmNorm,projectPlane);
 
 		return angle;
 
