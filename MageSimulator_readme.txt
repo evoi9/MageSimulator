@@ -11,6 +11,14 @@ Windows OS
 This tutorial will describe how to load and play the Mage Simulator game.
 
 ----- LOADING THE GAME -----
+There are 2 options for loading this game:
+
+1. The easy way double clicking the .exe file:
+Download the project from https://github.com/xzs424/MageSimulator.
+Double click MageSimulator.exe in Windows OS.
+You are now ready to play the game.
+
+2. The harder way using Unity:
 Download the project from https://github.com/xzs424/MageSimulator.
 Download and install Unity from https://unity3d.com/get-unity/download.
 Download and install the Leap Motion SDK from https://developer.leapmotion.com/downloads.
@@ -18,8 +26,9 @@ Download and install the Leap Motion Unity Core Assets Package from https://deve
 Launch Unity, and load the project.
 After loading, browse to the Assets > Scenes folder in the Project window and double click on the scene called Demo.
 Import the Leap Motion Unity Core Assets package (Insert > Import Package > Custom Package > Browse for the location of the package saved on your computer).
-Ensure the Leap Motion is plugged in to your computer with the correct drivers installed.
-You are now ready to play the game. Press the start button at the top of Unity to start the scene.
+Ensure the Leap Motion is plugged in to your computer with the correct drivers installed. 
+Press the start button at the top of Unity.
+You are now ready to play the game.
 
 ----- OBJECTIVE -----
 In Mage Simulator, your goal is to shoot fireballs at the cube targets on the screen.
