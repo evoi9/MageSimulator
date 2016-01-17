@@ -20,12 +20,8 @@ public class MageHandController : MonoBehaviour {
 
 	}
 
-	void Process(){
 
 
-
-
-	}
 
 	protected bool IsReadyToCastFireBall(HandModel leftHand, HandModel rightHand,float minToleranceAngle, float maxToleranceAngle){
 
@@ -42,7 +38,7 @@ public class MageHandController : MonoBehaviour {
 		return false;
 	}
 
-	protected bool IsReadyToReleaseFireBall(HandModel preLeftHand, HandModel preRightHand, HandModel 
+
 
 	// Update is called once per frame
 	void Update () {
@@ -59,6 +55,9 @@ public class MageHandController : MonoBehaviour {
 			if (isFireBallCasted) {
 
 				currentFireBall.transform.position = midPosition;
+
+
+
 
 			} else {
 				currentFireBall = GameObject.Instantiate (fireBall, midPosition, transform.rotation) as GameObject;
