@@ -9,7 +9,9 @@ public class MageHandController : MonoBehaviour {
 
 
 	public GameObject fireBall;
-	
+
+	private GameObject currentFireBall = null;
+
 	//public float fireballCreateTime = 1.0f;
 
 	// Use this for initialization
@@ -40,6 +42,7 @@ public class MageHandController : MonoBehaviour {
 		return false;
 	}
 
+	protected bool IsReadyToReleaseFireBall(HandModel preLeftHand, HandModel preRightHand, HandModel 
 
 	// Update is called once per frame
 	void Update () {
