@@ -5,20 +5,21 @@ public class MageHandController : MonoBehaviour {
 
 
 	private HandController handController;
-	private bool isFireBallCasted;
+	private bool isFireBallReleased;
 
 
-	public FireBall fireBall;
+	public FireBall fireBallPrefab;
 
 	private FireBall currentFireBall = null;
 
-	private float prevDist = Mathf.Infinity;
+	//private float prevDist = Mathf.Infinity;
+
 	//public float fireballCreateTime = 1.0f;
 
 	// Use this for initialization
 	void Start () {
 		handController = gameObject.GetComponent<HandController> ();
-	
+
 
 	}
 
@@ -41,6 +42,35 @@ public class MageHandController : MonoBehaviour {
 	}
 
 
+	protected void UpdateFireBall(HandModel leftHand, HandModel rightHand, FireBall fireBall){
+
+		if (!fireBall.IsReleased) {
+
+			Vector3 midPosition = Math3dExt.MidPosition (leftHand.GetPalmPosition (), rightHand.GetPalmPosition ());
+			
+			Vector3 leftPalmDir = leftHand.GetPalmDirection ();
+			
+			Vector3 rightPalmDir = rightHand.GetPalmDirection ();
+			
+			Vector3 avgDir = (leftPalmDir + rightPalmDir);
+			
+			currentFireBall.transform.position = midPosition;
+			currentFireBall.transform.LookAt (avgDir);
+			
+			float currentDist = Math3dExt.Distance (leftHand.GetPalmPosition (), rightHand.GetPalmPosition ());
+
+			currentFireBall.Grow (currentDist);
+
+		
+			if (!HandRecog.IsThumbBent (leftHand, 3) && HandRecog.IsThumbBent(rightHand,3) ){
+				//Debug.Log ("A");
+				currentFireBall.Release (avgDir, 10f, 1.0f);
+
+			}
+
+		}
+	}
+
 
 	// Update is called once per frame
 	void Update () {
@@ -50,75 +80,45 @@ public class MageHandController : MonoBehaviour {
 		HandModel leftHand = HandRecog.FindFirstLeftHand (hands);
 		HandModel rightHand = HandRecog.FindFirstRightHand (hands);
 
-		if (IsReadyToCastFireBall (leftHand, rightHand, -180.0f, -80.0f)) {
+	
 
+		if (IsReadyToCastFireBall (leftHand, rightHand, -180.0f, -80.0f)) {
 			Vector3 midPosition = Math3dExt.MidPosition (leftHand.GetPalmPosition (), rightHand.GetPalmPosition ());
 
 			if (currentFireBall) {
-		
-				currentFireBall.transform.position = midPosition;
 
-				float currentDist=	Math3dExt.Distance(leftHand.GetPalmPosition(), rightHand.GetPalmPosition());
-
-				if (prevDist == Mathf.Infinity){
-
-					prevDist = currentDist;
-				}
-
-				//Debug.Log ("CurrentDist: "+ currentDist  + ", PrevDist: " + prevDist);
-				//Debug.Log (currentDist - prevDist);
-				fireBall.Grow (10.0f);
-
-				prevDist = currentDist;
-
-
-
-//				if (leftHand.GetLeapHand().PinchStrength > 0.6 && rightHand.GetLeapHand().PinchStrength >0.6){
-//					Rigidbody rigidBody = currentFireBall.GetComponent<Rigidbody>();
-//
-//					rigidBody.AddForce(currentFireBall.transform.forward * 100);
-//					Debug.Log ("pinched");
-//				}
-
-				if (HandRecog.IsThumbBent(leftHand,3) || HandRecog.IsThumbBent(rightHand,3)){
-
-					Vector3 leftPalmDir = leftHand.GetPalmDirection();
-
-					Vector3 rightPalmDir = rightHand.GetPalmDirection ();
-
-					Vector3 avgDir = (leftPalmDir + rightPalmDir );
-
-					currentFireBall.Release(avgDir,10);
-
-					//currentFireBall = null;
-
-
-
-
-				}
+					UpdateFireBall(leftHand,rightHand,currentFireBall);
 
 			} else {
-				currentFireBall = GameObject.Instantiate (fireBall, midPosition, transform.rotation) as FireBall;
+				currentFireBall = Instantiate (fireBallPrefab, midPosition, transform.rotation) as FireBall;
 			}
 
 		} else {
 
-			if(currentFireBall){
+			if(currentFireBall && ! currentFireBall.IsReleased){
 
-				Rigidbody rigidBody = currentFireBall.GetComponent<Rigidbody>();
-				rigidBody.useGravity = true;
-				currentFireBall.gameObject.AddComponent<TimedDestroy>();
-
-
+				Rigidbody r =currentFireBall.GetComponent<Rigidbody>();
+			
+				r.useGravity = true;
 			}
 
-			prevDist = Mathf.Infinity;
+
 			currentFireBall = null;
 		}
 
 	
 	}
 
+	void OnCollisionEnter(Collision other)
+	{
+		if(other.gameObject.tag == "Cylinder")
+		{
+			Debug.Log ("fireball hit");
+			Destroy(other.gameObject);
+			Destroy(gameObject);
+
+		}
+	}
 	
 	
 }

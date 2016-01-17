@@ -6,11 +6,28 @@ using Leap;
 public class FireBall : MonoBehaviour {
 
 	private ParticleSystem ps;
-		
+	private int count;
+
+	private GameObject fireBallPrefab;
+
+	public bool IsReleased = false;
+
+	//private GameObject 
 	// Use this for initialization
 	void Start () {
 
-		ps = gameObject.GetComponent<ParticleSystem> ();
+		ps = gameObject.GetComponent<ParticleSystem>();
+		count = 0;
+
+
+	}
+
+	void FixedUpdate(){
+
+		if (IsReleased) {
+			Rigidbody rigidBody = gameObject.GetComponent<Rigidbody>();
+			rigidBody.AddForce(transform.forward * 1.0f);
+		}
 
 	}
 
@@ -18,24 +35,55 @@ public class FireBall : MonoBehaviour {
 	public void Grow(float factor){
 		//ps = gameObject.GetComponent<ParticleSystem>();
 		//ps.emissionRate.Equals (50f);
+		ps = gameObject.GetComponent<ParticleSystem>();
 
-		ps = gameObject.GetComponent<ParticleSystem> ();
-			ps.maxParticles += 100;
-			ps.startSize += 1.1f;
+		if (ps) {
 
-			gameObject.transform.localScale += new Vector3 (1*factor,1*factor,1*factor);
-			Debug.Log ("ps");
 
+//			ps.startSize = 0.1f;
+//			while (ps.startSize < 1.5*factor) {
+//				ps.startSize += 0.001f;
+//				
+//			}
+//			//Debug.Log (factor);
+//			ps.maxParticles += 100;
+			ps.startSize = 1f*factor;
+			//ps.maxParticles = (int) 1000*factor;
+			gameObject.transform.localScale = new Vector3 (0.1f*factor,0.1f*factor,0.1f*factor);
+
+
+		}
+
+			//gameObject.transform.localScale += new Vector3 (1*factor,1*factor,1*factor);
+		//	Debug.Log ("ps");
 
 
 		//gameObject.transform.localScale += new Vector3 (1*factor, 1*factor, 1*factor);
 	}
+	
 
-	public void Release(Vector3 dir, float magnitude){
+	public void Release(Vector3 dir, float magnitude, float gravityAmend){
+
+		gameObject.transform.LookAt (dir);
 		Rigidbody rigidBody = gameObject.GetComponent<Rigidbody>();
+	
 		rigidBody.AddForce(dir * magnitude);
-		//Debug.Log ("pinched");
 
+		//Debug.Log ("pinched");
+		//Rigidbody rigidBody = currentFireBall.GetComponent<Rigidbody>();
+
+		//rigidBody.useGravity = true;
+
+		//Vector3 amended = Vector3.Scale (Physics.gravity, new Vector3 (gravityAmend, gravityAmend, gravityAmend));
+
+		rigidBody.AddForce (gravityAmend * Physics.gravity);
+
+		//Vector3 gravityAmend = Vector3.Scale (Physics.gravity, new Vector3 (0.5f, 0.5f, 0.5f));
+		//rigidBody.AddForce (gravityAmend, ForceMode.Acceleration); 
+		gameObject.AddComponent<TimedDestroy>();
+
+		IsReleased = true;
+		
 	}
 	
 	// Update is called once per frame
@@ -43,5 +91,17 @@ public class FireBall : MonoBehaviour {
 
 
 
+	}
+	void OnCollisionEnter(Collision other)
+	{
+
+		if(other.gameObject.name == "Cylinder")
+		{
+			Debug.Log ("fireball hit");
+			Destroy(other.gameObject);
+			count = count+1;
+		}
+
+		Destroy (gameObject);
 	}
 }

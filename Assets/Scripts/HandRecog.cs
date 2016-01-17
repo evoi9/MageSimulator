@@ -51,7 +51,7 @@ public class HandRecog : MonoBehaviour {
 		
 		if (fingerIndex == 0) {
 			
-			float angle = Math3dExt.SignedVectorAngle (palmDir, fingerDir, palmNormal);
+			float angle = Math3d.SignedVectorAngle (palmDir, fingerDir, palmNormal);
 			
 			//Debug.Log ("Finger: " + finger.fingerType + ", bone: " + boneIndex + ", angle to palm direction: " + angle);
 			
@@ -88,7 +88,7 @@ public class HandRecog : MonoBehaviour {
 		Vector3 leftPalmNormProj = Math3d.ProjectVectorOnPlane (projectPlane,leftPalmNorm).normalized;
 		Vector3 rightPalmNormProj = Math3d.ProjectVectorOnPlane (projectPlane,rightPalmNorm).normalized;
 
-		float angle = Math3dExt.SignedVectorAngle (leftPalmNorm, rightPalmNorm,projectPlane);
+		float angle = Math3d.SignedVectorAngle (leftPalmNorm, rightPalmNorm,projectPlane);
 
 		return angle;
 
@@ -102,7 +102,7 @@ public class HandRecog : MonoBehaviour {
 		Vector3 leftPalmDirProj = Math3d.ProjectVectorOnPlane (projectPlane, leftPalmDir).normalized;
 		Vector3 rightPalmDirProj = Math3d.ProjectVectorOnPlane (projectPlane, rightPalmDir).normalized;
 
-		float angle = Math3dExt.SignedVectorAngle (leftPalmDirProj, rightPalmDirProj, projectPlane);
+		float angle = Math3d.SignedVectorAngle (leftPalmDirProj, rightPalmDirProj, projectPlane);
 
 		return angle;
 
@@ -160,10 +160,10 @@ public class HandRecog : MonoBehaviour {
 		Vector3 palmDir = hand.GetPalmDirection ();
 
 		if (fingerIndex == 0) {
-
-			 float angle = Math3dExt.SignedVectorAngle (palmDir, fingerDir, palmNormal);
+			 
+			 float angle = Math3d.SignedVectorAngle (palmDir, fingerDir, palmNormal);
 			
-			//Debug.Log ("Finger: " + finger.fingerType + ", bone: " + boneIndex + ", angle to palm direction: " + angle);
+			Debug.Log ("Finger: " + finger.fingerType + ", bone: " + boneIndex + ", angle to palm direction: " + angle);
 			
 			if (angle < 0)
 				return true;
