@@ -59,12 +59,13 @@ public class MageHandController : MonoBehaviour {
 			
 			float currentDist = Math3dExt.Distance (leftHand.GetPalmPosition (), rightHand.GetPalmPosition ());
 
+			Debug.Log (currentDist);
 			currentFireBall.Grow (currentDist);
 
 		
 			if (!HandRecog.IsThumbBent (leftHand, 3) && HandRecog.IsThumbBent(rightHand,3) ){
 				//Debug.Log ("A");
-				currentFireBall.Release (avgDir, 10f, 0.2f);
+				currentFireBall.Release (avgDir, 50f, 0.0f);
 
 			}
 

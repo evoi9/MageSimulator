@@ -27,6 +27,7 @@ public class FireBall : MonoBehaviour {
 		if (IsReleased) {
 			Rigidbody rigidBody = gameObject.GetComponent<Rigidbody>();
 			//rigidBody.AddForce(transform.forward * 5.0f);
+			//rigidBody.AddForce(Vector3.forward *5.0f);
 		}
 
 	}
@@ -49,7 +50,8 @@ public class FireBall : MonoBehaviour {
 //			ps.maxParticles += 100;
 			ps.startSize = 1f*factor;
 			//ps.maxParticles = (int) 1000*factor;
-			gameObject.transform.localScale = new Vector3 (0.1f*factor,0.1f*factor,0.1f*factor);
+			gameObject.transform.localScale = new Vector3 (0.25f *factor, 0.25f*factor, 0.25f*factor);
+			GetComponent<SphereCollider>().radius = 1.5f *factor;
 
 
 		}
@@ -95,13 +97,13 @@ public class FireBall : MonoBehaviour {
 	void OnCollisionEnter(Collision other)
 	{
 
-		if(other.gameObject.name == "Cylinder")
-		{
-			Debug.Log ("fireball hit");
-			Destroy(other.gameObject);
-			count = count+1;
-		}
-
-		Destroy (gameObject);
+//		if(other.gameObject.name == "Cylinder")
+//		{
+//			Debug.Log ("fireball hit");
+//			Destroy(other.gameObject);
+//			count = count+1;
+//		}
+//
+//		Destroy (gameObject);
 	}
 }
