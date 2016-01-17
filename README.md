@@ -1,7 +1,8 @@
 # MageSimulator
 Unity game using Leap Motion to cast fire ball ---> mage style guaranteed
 
-
+To see the video tutorial to understand how to play this game,  please click here:
+https://youtu.be/Nm71lszHdkI
 
 #REQUIREMENTS
 Leap Motion hardware
