@@ -8,10 +8,11 @@ public class MageHandController : MonoBehaviour {
 	private bool isFireBallCasted;
 
 
-	public GameObject fireBall;
+	public FireBall fireBall;
 
-	private GameObject currentFireBall = null;
+	private FireBall currentFireBall = null;
 
+	private float prevDist = Mathf.Infinity;
 	//public float fireballCreateTime = 1.0f;
 
 	// Use this for initialization
@@ -57,6 +58,21 @@ public class MageHandController : MonoBehaviour {
 		
 				currentFireBall.transform.position = midPosition;
 
+				float currentDist=	Math3dExt.Distance(leftHand.GetPalmPosition(), rightHand.GetPalmPosition());
+
+				if (prevDist == Mathf.Infinity){
+
+					prevDist = currentDist;
+				}
+
+				//Debug.Log ("CurrentDist: "+ currentDist  + ", PrevDist: " + prevDist);
+				//Debug.Log (currentDist - prevDist);
+				fireBall.Grow (10.0f);
+
+				prevDist = currentDist;
+
+
+
 //				if (leftHand.GetLeapHand().PinchStrength > 0.6 && rightHand.GetLeapHand().PinchStrength >0.6){
 //					Rigidbody rigidBody = currentFireBall.GetComponent<Rigidbody>();
 //
@@ -65,15 +81,24 @@ public class MageHandController : MonoBehaviour {
 //				}
 
 				if (HandRecog.IsThumbBent(leftHand,3) || HandRecog.IsThumbBent(rightHand,3)){
-										Rigidbody rigidBody = currentFireBall.GetComponent<Rigidbody>();
 
-										rigidBody.AddForce(currentFireBall.transform.forward * 100);
-										Debug.Log ("pinched");
+					Vector3 leftPalmDir = leftHand.GetPalmDirection();
+
+					Vector3 rightPalmDir = rightHand.GetPalmDirection ();
+
+					Vector3 avgDir = (leftPalmDir + rightPalmDir );
+
+					currentFireBall.Release(avgDir,10);
+
+					//currentFireBall = null;
+
+
+
 
 				}
 
 			} else {
-				currentFireBall = GameObject.Instantiate (fireBall, midPosition, transform.rotation) as GameObject;
+				currentFireBall = GameObject.Instantiate (fireBall, midPosition, transform.rotation) as FireBall;
 			}
 
 		} else {
@@ -82,10 +107,12 @@ public class MageHandController : MonoBehaviour {
 
 				Rigidbody rigidBody = currentFireBall.GetComponent<Rigidbody>();
 				rigidBody.useGravity = true;
+				currentFireBall.gameObject.AddComponent<TimedDestroy>();
 
 
 			}
 
+			prevDist = Mathf.Infinity;
 			currentFireBall = null;
 		}
 
