@@ -141,6 +141,13 @@ public class HandRecog : MonoBehaviour {
 
 	}
 
+//	public bool IsGestureGrab(HandModel hand){
+//
+//		FingerModel [] fingers = hand.fingers;
+//
+//
+//	}
+
 
 	public static bool IsFingerBent(HandModel hand, int fingerIndex, int boneIndex){
 

@@ -17,6 +17,7 @@ public class MageHandController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		handController = gameObject.GetComponent<HandController> ();
+	
 
 	}
 
@@ -29,7 +30,7 @@ public class MageHandController : MonoBehaviour {
 
 				float angle = HandRecog.AngleBetweenPalmsNormals (leftHand, rightHand, transform.forward);
 
-				Debug.Log("PalmAngle:" +angle);
+				//Debug.Log("PalmAngle:" +angle);
 				if (angle >= minToleranceAngle && angle <= maxToleranceAngle)
 					return true;
 				
@@ -48,30 +49,44 @@ public class MageHandController : MonoBehaviour {
 		HandModel leftHand = HandRecog.FindFirstLeftHand (hands);
 		HandModel rightHand = HandRecog.FindFirstRightHand (hands);
 
-		if (IsReadyToCastFireBall (leftHand, rightHand, -180.0f, -100.0f)) {
+		if (IsReadyToCastFireBall (leftHand, rightHand, -180.0f, -80.0f)) {
 
 			Vector3 midPosition = Math3dExt.MidPosition (leftHand.GetPalmPosition (), rightHand.GetPalmPosition ());
 
-			if (isFireBallCasted) {
-
+			if (currentFireBall) {
+		
 				currentFireBall.transform.position = midPosition;
 
+//				if (leftHand.GetLeapHand().PinchStrength > 0.6 && rightHand.GetLeapHand().PinchStrength >0.6){
+//					Rigidbody rigidBody = currentFireBall.GetComponent<Rigidbody>();
+//
+//					rigidBody.AddForce(currentFireBall.transform.forward * 100);
+//					Debug.Log ("pinched");
+//				}
 
+				if (HandRecog.IsThumbBent(leftHand,3) || HandRecog.IsThumbBent(rightHand,3)){
+										Rigidbody rigidBody = currentFireBall.GetComponent<Rigidbody>();
 
+										rigidBody.AddForce(currentFireBall.transform.forward * 100);
+										Debug.Log ("pinched");
+
+				}
 
 			} else {
 				currentFireBall = GameObject.Instantiate (fireBall, midPosition, transform.rotation) as GameObject;
-				//currentFireBall.transform.position = midPosition;
-				isFireBallCasted = true;
 			}
 
 		} else {
 
 			if(currentFireBall){
 
-				currentFireBall.AddComponent<Rigidbody>();
+				Rigidbody rigidBody = currentFireBall.GetComponent<Rigidbody>();
+				rigidBody.useGravity = true;
+
+
 			}
-			isFireBallCasted = false;
+
+			currentFireBall = null;
 		}
 
 	
