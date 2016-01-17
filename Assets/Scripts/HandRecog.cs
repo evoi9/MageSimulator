@@ -21,14 +21,22 @@ public class HandRecog : MonoBehaviour {
 
 	}
 
-	public static float DistanceBetweenPalms(HandModel leftHand, HandModel rightHand){
+	public static float DistanceBetweenPalms(HandModel handOne, HandModel handTwo){
 
-		Vector3 leftHandPalmPos = leftHand.GetPalmPosition();
-		Vector3 rightHandPalmPos = rightHand.GetPalmPosition ();
+		Vector3 handOnePalmPos = handOne.GetPalmPosition();
+		Vector3 handTwoPalmPos = handTwo.GetPalmPosition ();
 
-		Vector3 diff = leftHandPalmPos - rightHandPalmPos;
+		return Math3dExt.Distance (handOnePalmPos, handTwoPalmPos);
 
-		return diff.magnitude;
+	}
+
+	public static Vector3 DirectionBetweenPalm(HandModel fromHand, HandModel toHand){
+
+		Vector3 fromHandPalmPos = fromHand.GetPalmPosition ();
+		Vector3 toHandPalmPos = toHand.GetPalmPosition ();
+
+		return Math3dExt.Direction (fromHandPalmPos, toHandPalmPos);
+
 	}
 
 	public static bool IsFingerBentWithinAngle(HandModel hand, int fingerIndex, int boneIndex, float minAngle, float maxAngle){

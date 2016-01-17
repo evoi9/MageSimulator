@@ -9,14 +9,19 @@ public class MageHandController : MonoBehaviour {
 
 
 	public GameObject fireBall;
-
-	private GameObject currentFireBall = null;
 	
 	//public float fireballCreateTime = 1.0f;
 
 	// Use this for initialization
 	void Start () {
 		handController = gameObject.GetComponent<HandController> ();
+
+	}
+
+	void Process(){
+
+
+
 
 	}
 
@@ -35,6 +40,7 @@ public class MageHandController : MonoBehaviour {
 		return false;
 	}
 
+
 	// Update is called once per frame
 	void Update () {
 
@@ -44,9 +50,9 @@ public class MageHandController : MonoBehaviour {
 		HandModel rightHand = HandRecog.FindFirstRightHand (hands);
 
 		if (IsReadyToCastFireBall (leftHand, rightHand, -180.0f, -100.0f)) {
+
 			Vector3 midPosition = Math3dExt.MidPosition (leftHand.GetPalmPosition (), rightHand.GetPalmPosition ());
-			
-		
+
 			if (isFireBallCasted) {
 
 				currentFireBall.transform.position = midPosition;
