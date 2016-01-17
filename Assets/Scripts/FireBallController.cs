@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Leap;
-using HandRecog;
+
 
 public class FireBall : MonoBehaviour {
 
