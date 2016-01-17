@@ -36,4 +36,22 @@ public class Math3dExt : MonoBehaviour {
 	}
 
 
+	public static float Distance(Vector3 vec1, Vector3 vec2){
+
+		Vector3 diff = vec1 - vec2;
+
+		return diff.magnitude;
+
+	}
+
+	public static Vector3 Direction(Vector3 from, Vector3 to){
+
+		Vector3 diff = to - from;
+
+		return diff.normalized;
+
+	}
+
+
+
 }
