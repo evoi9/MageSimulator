@@ -4,7 +4,7 @@ using System.Collections;
 public class TimedDestroy : MonoBehaviour {
 
 	[SerializeField]
-	float _destroyDelay = 5;
+	float _destroyDelay = 10;
 
 	void OnEnable()
 	{

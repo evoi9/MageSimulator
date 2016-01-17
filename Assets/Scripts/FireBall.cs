@@ -26,7 +26,7 @@ public class FireBall : MonoBehaviour {
 
 		if (IsReleased) {
 			Rigidbody rigidBody = gameObject.GetComponent<Rigidbody>();
-			rigidBody.AddForce(transform.forward * 1.0f);
+			//rigidBody.AddForce(transform.forward * 5.0f);
 		}
 
 	}

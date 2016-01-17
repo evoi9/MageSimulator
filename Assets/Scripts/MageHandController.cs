@@ -64,7 +64,7 @@ public class MageHandController : MonoBehaviour {
 		
 			if (!HandRecog.IsThumbBent (leftHand, 3) && HandRecog.IsThumbBent(rightHand,3) ){
 				//Debug.Log ("A");
-				currentFireBall.Release (avgDir, 10f, 1.0f);
+				currentFireBall.Release (avgDir, 10f, 0.2f);
 
 			}
 
