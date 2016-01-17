@@ -10,11 +10,6 @@ Windows OS
 ----- BRIEFING -----
 This tutorial will describe how to load and play the Mage Simulator game.
 
------ OBJECTIVE -----
-In Mage Simulator, your goal is to shoot fireballs at the square targets on the screen.
-Your score increases the more squares you can hit.
-There is no time limit, you just must be able to hit the cubes.
-
 ----- LOADING THE GAME -----
 Download the project from https://github.com/xzs424/MageSimulator.
 Download and install Unity from https://unity3d.com/get-unity/download.
@@ -26,8 +21,17 @@ Import the Leap Motion Unity Core Assets package (Insert > Import Package > Cust
 Ensure the Leap Motion is plugged in to your computer with the correct drivers installed.
 You are now ready to play the game. Press the start button at the top of Unity to start the scene.
 
+----- OBJECTIVE -----
+In Mage Simulator, your goal is to shoot fireballs at the cube targets on the screen.
+Your score increases the more cubes you can hit.
+
+----- SCORING -----
+You receive a point for every single cube that you are able to hit.
+You will also receive a point if you hit a cube that is floating (i.e. has already been hit).
+There is no time limit, you just must be able to hit the cubes by manipulating the size and direction of the fireball.
+
 ----- CONTROLS -----
-In this section, you will learn how to generate a fireball, increase the size of the fireball, shooting/releasing the fireball, controlling the direction the fireball shoots, and generating a new fireball after you release a fireball.
+In this section, you will learn how to generate a fireball, increase the size of the fireball, shooting/releasing the fireball, manipulating the direction of fireball, and generating a new fireball after you release a fireball.
 
 --- Generating a Fireball ---
 Place both hands directly above the Leap Motion controller about 10-15cm, palms facing each other so that your hands are parallel to each other. 
@@ -63,3 +67,7 @@ To generate consecutive fireballs, you can perform one of the following motions:
 - Face your palms slightly downwards, at about a 45 degree angle so that your palms are facing slightly normal to the Leap Motion controller. Then, readjust your palms so that they are facing each other and your hands are parallel.
 
 If you perform these motions successfully, the fireball (should you be currently holding one) will drop. If you are not holding a fireball, a new fireball should be generated between your palms.
+
+--- Restarting the Game ---
+Press 'R' on the keyboard to reload the game.
+Note that the game will be reset to its initial state; score will be reset to 0, and cubes will be reset to their original position.
